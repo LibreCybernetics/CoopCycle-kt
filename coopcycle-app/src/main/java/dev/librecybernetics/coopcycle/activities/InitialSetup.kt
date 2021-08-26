@@ -22,9 +22,9 @@ import com.android.volley.VolleyError
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import dev.librecybernetics.coopcycle.R
+import dev.librecybernetics.coopcycle.Util.location
 import dev.librecybernetics.coopcycle.schema.Cooperative
 import dev.librecybernetics.location_lib.LocationActivityService
-import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 
@@ -119,10 +119,7 @@ class InitialSetup : AppCompatActivity(), LocationActivityService {
                     )
                     Log.d("SELECT.COOPERATIVES.LOCATION", coarseLocation.toString())
                     val closestCoop: Cooperative? = cooperatives.sortedBy {
-                        val l = Location("")
-                        l.latitude = it.latitude.latitude.toDouble()
-                        l.longitude = it.longitude.longitude.toDouble()
-                        coarseLocation?.distanceTo(l)
+                        coarseLocation?.distanceTo(location(it))
                     }.getOrNull(0)
                     Log.d("SELECT.COOPERATIVES.CLOSEST", closestCoop.toString())
                     if (closestCoop != null) {
