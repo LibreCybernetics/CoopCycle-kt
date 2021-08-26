@@ -3,9 +3,9 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
-        jcenter() // Warning: this repository is going to shut down soon
     }
 }
 rootProject.name = "CoopCycle"
-include ':app'
+include ':coopcycle-app'
 include ':coopcycle-lib'
+include ':location-lib'

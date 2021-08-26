@@ -9,6 +9,8 @@
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.6666666666666666" />
         <entry key="app/src/main/res/layout/city_selection.xml" value="0.42094017094017094" />
         <entry key="app/src/main/res/layout/city_selection_cooperative_card.xml" value="0.42777777777777776" />
+        <entry key="app/src/main/res/layout/initial_setup_cooperative_card.xml" value="0.42777777777777776" />
+        <entry key="app/src/main/res/layout/initial_setup_selection.xml" value="0.42777777777777776" />
         <entry key="app/src/main/res/layout/welcome_screen.xml" value="0.46153846153846156" />
       </map>
     </option>

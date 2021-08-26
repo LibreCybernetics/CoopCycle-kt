@@ -11,5 +11,4 @@ java {
 
 dependencies {
     implementation 'org.jetbrains.kotlinx:kotlinx-serialization-json:1.2.2'
-    implementation 'androidx.annotation:annotation:1.2.0'
 }
