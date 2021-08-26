@@ -3,10 +3,14 @@ package dev.librecybernetics.coopcycle
 import android.os.Bundle
 import android.util.Log
 import android.view.KeyEvent
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.Button
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.cardview.widget.CardView
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.volley.Request
 import com.android.volley.RequestQueue
@@ -14,8 +18,6 @@ import com.android.volley.VolleyError
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import dev.librecybernetics.coopcycle.schema.Cooperative
-import dev.librecybernetics.coopcycle.types.CityName
-import dev.librecybernetics.coopcycle.types.CountryCode
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 
@@ -24,6 +26,43 @@ class ChooseCityActivity : AppCompatActivity() {
         private enum class Screen { Welcome, Selection }
 
         private val jsonFormat = Json { isLenient = true; ignoreUnknownKeys = true }
+
+        private data class CooperativeHolder(val view: View) : RecyclerView.ViewHolder(view) {
+            private val cityNameView: TextView = view.findViewById(R.id.choose_city_card_city)
+            private val countryCodeView: TextView =
+                view.findViewById(R.id.choose_city_card_country_code)
+            private val cooperativeNameView: TextView =
+                view.findViewById(R.id.choose_city_card_coop_name)
+
+            private var currentCooperative: Cooperative? = null
+            fun updateWithCooperative(cooperative: Cooperative) {
+                currentCooperative = cooperative
+                cityNameView.text = cooperative.city.name
+                countryCodeView.text = cooperative.country.code
+                cooperativeNameView.text = "Cooperative: ${cooperative.name.name}"
+            }
+        }
+
+        private data class CooperativeCardRecyclerAdapter(val cooperatives: Set<Cooperative>) :
+            RecyclerView.Adapter<CooperativeHolder>() {
+            private val sortedCooperatives = cooperatives.sortedBy { it.city.name }
+
+            override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CooperativeHolder {
+                return CooperativeHolder(
+                    LayoutInflater
+                        .from(parent.context)
+                        .inflate(R.layout.city_selection_cooperative_card, parent, false)
+                )
+            }
+
+            override fun onBindViewHolder(holder: CooperativeHolder, position: Int) {
+                holder.updateWithCooperative(sortedCooperatives[position])
+            }
+
+            override fun getItemCount(): Int {
+                return cooperatives.size
+            }
+        }
     }
 
     private val cooperativesRequest: StringRequest =
@@ -35,8 +74,8 @@ class ChooseCityActivity : AppCompatActivity() {
         )
 
     // TODO: Move to Bundle to cache results
-    private var cooperatives: Map<Pair<CountryCode, CityName>, Cooperative>? = null
-    private var currentScreen: Screen? = null
+    private var cooperatives: Set<Cooperative> = setOf()
+    private var currentScreen: Screen = Screen.Welcome
     private var volleyRequestQueue: RequestQueue? = null
 
     private fun changeScreen(toScreen: Screen) {
@@ -48,9 +87,11 @@ class ChooseCityActivity : AppCompatActivity() {
             }
             Screen.Selection -> {
                 setContentView(R.layout.city_selection)
-                if(!cooperatives.isNullOrEmpty()) {
-                    val chooseCityRecyclerView: RecyclerView = findViewById(R.id.choose_city_recycler_view)
-                    // TODO: Display each coop card.
+                if (cooperatives.isNotEmpty()) {
+                    val chooseCityRecyclerView: RecyclerView =
+                        findViewById(R.id.choose_city_recycler_view)
+                    chooseCityRecyclerView.adapter = CooperativeCardRecyclerAdapter(cooperatives)
+                    chooseCityRecyclerView.layoutManager = LinearLayoutManager(this)
                 }
             }
         }
@@ -65,15 +106,16 @@ class ChooseCityActivity : AppCompatActivity() {
     private fun processResponse(response: String) {
         cooperatives = jsonFormat
             .decodeFromString<List<Cooperative>>(response)
-            .map { Pair(it.country, it.city) to it }
-            .toMap()
-        if (cooperatives.isNullOrEmpty()) {
+            .toSet()
+        // Reload page with results; TODO: Investigate graceful recyclerview update
+        if (currentScreen == Screen.Selection) changeScreen(Screen.Selection)
+        if (cooperatives.isEmpty()) {
             Log.w("FETCH.COOPERATIVES", "Successfully got zero cooperatives")
         } else {
             Log.i("FETCH.COOPERATIVES", "Successfully got list of cooperatives")
             Log.v(
                 "FETCH.COOPERATIVES",
-                cooperatives?.entries?.map { it.value.name }?.toString().orEmpty()
+                cooperatives.map { it.name }.toString()
             )
         }
     }
