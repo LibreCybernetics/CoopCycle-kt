@@ -35,6 +35,16 @@ class InitialSetup : AppCompatActivity(), LocationActivityService {
         private val jsonFormat = Json { isLenient = true; ignoreUnknownKeys = true }
 
         private data class CooperativeHolder(val view: View) : RecyclerView.ViewHolder(view) {
+            init {
+                view.setOnClickListener {
+                    Toast.makeText(
+                        view.context,
+                        "Selected ${currentCooperative?.name}",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+
             private val cityNameView: TextView = view.findViewById(R.id.choose_city_card_city)
             private val countryCodeView: TextView =
                 view.findViewById(R.id.choose_city_card_country_code)
@@ -131,7 +141,6 @@ class InitialSetup : AppCompatActivity(), LocationActivityService {
         Toast.makeText(this, error.localizedMessage, Toast.LENGTH_LONG).show()
     }
 
-    @ExperimentalSerializationApi
     private fun processResponse(response: String) {
         cooperatives = jsonFormat
             .decodeFromString<List<Cooperative>>(response)

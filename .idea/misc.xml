@@ -12,6 +12,8 @@
         <entry key="app/src/main/res/layout/initial_setup_cooperative_card.xml" value="0.42777777777777776" />
         <entry key="app/src/main/res/layout/initial_setup_selection.xml" value="0.42777777777777776" />
         <entry key="app/src/main/res/layout/welcome_screen.xml" value="0.46153846153846156" />
+        <entry key="coopcycle-app/src/main/res/layout/initial_setup_cooperative_card.xml" value="0.4346153846153846" />
+        <entry key="coopcycle-app/src/main/res/layout/initial_setup_welcome.xml" value="0.4346153846153846" />
       </map>
     </option>
   </component>
