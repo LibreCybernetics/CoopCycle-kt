@@ -12,4 +12,15 @@ java {
 dependencies {
     implementation project(path: ':util')
     implementation 'org.jetbrains.kotlinx:kotlinx-serialization-json:1.2.2'
+
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.7.2'
+    testImplementation 'io.kotest:kotest-assertions-core:4.6.2'
+    testImplementation 'io.kotest:kotest-property:4.6.2'
+    testImplementation 'io.kotest:kotest-runner-junit5:4.6.2'
+}
+
+test {
+    useJUnitPlatform {
+        includeEngines 'kotest'
+    }
 }

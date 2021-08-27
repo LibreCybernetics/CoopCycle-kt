@@ -30,7 +30,7 @@ interface CooperativeSummaryDAO {
         }
 
         private fun processResponse(response: String) {
-            result = Success(Cooperative.setFromString(response))
+            result = Success(Cooperative.setFromJSONString(response))
         }
     }
 
