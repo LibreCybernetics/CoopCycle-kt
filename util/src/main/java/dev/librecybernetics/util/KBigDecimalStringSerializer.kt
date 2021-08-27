@@ -1,4 +1,4 @@
-package dev.librecybernetics.coopcycle.util
+package dev.librecybernetics.util
 
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.descriptors.PrimitiveKind

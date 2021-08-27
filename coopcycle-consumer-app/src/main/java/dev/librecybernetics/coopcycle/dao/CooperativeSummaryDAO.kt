@@ -9,17 +9,12 @@ import com.android.volley.VolleyError
 import com.android.volley.toolbox.StringRequest
 import dev.librecybernetics.coopcycle.schema.Cooperative
 import dev.librecybernetics.coopcycle.util.UTF8StringRequest
-import kotlinx.serialization.ExperimentalSerializationApi
-import kotlinx.serialization.decodeFromString
-import kotlinx.serialization.json.Json
 
 interface CooperativeSummaryDAO {
     companion object {
         sealed interface Result
         data class Success(val cooperatives: Set<Cooperative>) : Result
         data class Error(val error: VolleyError) : Result
-
-        private val jsonFormat = Json { isLenient = true; ignoreUnknownKeys = true }
 
         var result: Result? = null
         private val cooperativeSummaryRequest: StringRequest = UTF8StringRequest(
@@ -34,9 +29,8 @@ interface CooperativeSummaryDAO {
             Log.e("FETCH.COOPERATIVES", error.message.orEmpty())
         }
 
-        @OptIn(ExperimentalSerializationApi::class)
         private fun processResponse(response: String) {
-            result = Success(jsonFormat.decodeFromString<List<Cooperative>>(response).toSet())
+            result = Success(Cooperative.setFromString(response))
         }
     }
 

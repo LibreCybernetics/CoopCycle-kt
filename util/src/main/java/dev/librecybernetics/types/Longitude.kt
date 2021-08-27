@@ -1,6 +1,6 @@
-package dev.librecybernetics.coopcycle.types
+package dev.librecybernetics.types
 
-import dev.librecybernetics.coopcycle.util.KBigDecimalStringSerializer
+import dev.librecybernetics.util.KBigDecimalStringSerializer
 import kotlinx.serialization.Serializable
 import java.math.BigDecimal
 

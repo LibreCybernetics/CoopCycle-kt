@@ -10,9 +10,10 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/coopcycle-app" />
+            <option value="$PROJECT_DIR$/coopcycle-consumer-app" />
             <option value="$PROJECT_DIR$/coopcycle-lib" />
-            <option value="$PROJECT_DIR$/location-lib" />
+            <option value="$PROJECT_DIR$/location-android-lib" />
+            <option value="$PROJECT_DIR$/util" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

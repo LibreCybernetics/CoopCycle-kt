@@ -6,6 +6,7 @@ dependencyResolutionManagement {
     }
 }
 rootProject.name = "CoopCycle"
-include ':coopcycle-app'
+include ':coopcycle-consumer-app'
 include ':coopcycle-lib'
-include ':location-lib'
+include ':location-android-lib'
+include ':util'

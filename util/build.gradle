@@ -10,6 +10,5 @@ java {
 }
 
 dependencies {
-    implementation project(path: ':util')
     implementation 'org.jetbrains.kotlinx:kotlinx-serialization-json:1.2.2'
 }

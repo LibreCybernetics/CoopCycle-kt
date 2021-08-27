@@ -1,6 +1,6 @@
-package dev.librecybernetics.coopcycle.types
+package dev.librecybernetics.types
 
-import dev.librecybernetics.coopcycle.util.KUppercaseSerializer
+import dev.librecybernetics.util.KUppercaseSerializer
 import kotlinx.serialization.Serializable
 
 @JvmInline
