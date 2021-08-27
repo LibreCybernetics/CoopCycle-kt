@@ -64,7 +64,11 @@ interface LocationActivityService {
         return locationManager?.allProviders.orEmpty()
             .mapNotNull {
                 if (hasLocationPermission(LocationAccuracy.Coarse))
-                    locationManager?.getLastKnownLocation(it)
+                    try {
+                        locationManager?.getLastKnownLocation(it)
+                    } catch (e: SecurityException) {
+                        return null
+                    }
                 else null
             }
             .map { Log.v("LOCATION.${it.provider}", it.toString()); it }
@@ -78,13 +82,17 @@ interface LocationActivityService {
         val locationSet = HashSet<Location>()
         locationManager?.allProviders.orEmpty().mapNotNull { provider ->
             if (hasLocationPermission(accuracy) && locationManager != null)
-                LocationManagerCompat.getCurrentLocation(
-                    locationManager!!,
-                    provider,
-                    null,
-                    directExecutor,
-                    { location -> locationSet.add(location) }
-                )
+                try {
+                    LocationManagerCompat.getCurrentLocation(
+                        locationManager!!,
+                        provider,
+                        null,
+                        directExecutor,
+                        { location -> locationSet.add(location) }
+                    )
+                } catch (e: SecurityException) {
+                    return null
+                }
             else null
         }
 
