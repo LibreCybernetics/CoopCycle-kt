@@ -2,6 +2,7 @@ plugins {
     id 'java-library'
     id 'kotlin'
     id 'org.jetbrains.kotlin.plugin.serialization'
+    id 'jacoco'
 }
 
 java {
@@ -9,7 +10,39 @@ java {
     targetCompatibility = JavaVersion.VERSION_11
 }
 
+compileKotlin {
+    kotlinOptions.jvmTarget = "11"
+}
+
 dependencies {
     implementation project(path: ':util')
     implementation 'org.jetbrains.kotlinx:kotlinx-serialization-json:1.2.2'
+
+    testImplementation 'io.kotest:kotest-assertions-core:4.6.2'
+    testImplementation 'io.kotest:kotest-property:4.6.2'
+    testImplementation 'io.kotest:kotest-runner-junit5:4.6.2'
+    testImplementation 'io.kotest:kotest-extensions-junitxml:4.6.2'
+}
+
+test {
+    systemProperty("gradle.build.dir", project.buildDir)
+
+    compileKotlin {
+        kotlinOptions.jvmTarget = "11"
+    }
+
+    useJUnitPlatform {
+        includeEngines 'kotest'
+    }
+}
+
+jacoco {
+    toolVersion = "0.8.7"
+}
+
+jacocoTestReport {
+    reports {
+        html.required = false
+        xml.required = true
+    }
 }
