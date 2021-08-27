@@ -1,4 +1,4 @@
-package dev.librecybernetics.location_lib
+package dev.librecybernetics.location
 
 import android.Manifest
 import android.annotation.SuppressLint

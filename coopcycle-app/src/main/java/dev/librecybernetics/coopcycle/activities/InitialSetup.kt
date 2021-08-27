@@ -24,9 +24,10 @@ import com.android.volley.toolbox.Volley
 import dev.librecybernetics.coopcycle.R
 import dev.librecybernetics.coopcycle.Util.location
 import dev.librecybernetics.coopcycle.schema.Cooperative
-import dev.librecybernetics.location_lib.LocationActivityService
+import dev.librecybernetics.location.LocationActivityService
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
+import kotlin.math.max
 
 class InitialSetup : AppCompatActivity(), LocationActivityService {
     companion object {
@@ -125,7 +126,7 @@ class InitialSetup : AppCompatActivity(), LocationActivityService {
                     if (closestCoop != null) {
                         val position = cooperatives.sortedBy { it.city.name }
                             .indexOfFirst { it.city.name == closestCoop.city.name }
-                        chooseCityRecyclerView.scrollToPosition(position)
+                        chooseCityRecyclerView.scrollToPosition(max(position - 3, 0))
                     }
                 }
             }
