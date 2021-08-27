@@ -8,6 +8,7 @@ import com.android.volley.RequestQueue
 import com.android.volley.VolleyError
 import com.android.volley.toolbox.StringRequest
 import dev.librecybernetics.coopcycle.schema.Cooperative
+import dev.librecybernetics.coopcycle.util.UTF8StringRequest
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
@@ -21,7 +22,7 @@ interface CooperativeSummaryDAO {
         private val jsonFormat = Json { isLenient = true; ignoreUnknownKeys = true }
 
         var result: Result? = null
-        private val cooperativeSummaryRequest: StringRequest = StringRequest(
+        private val cooperativeSummaryRequest: StringRequest = UTF8StringRequest(
             Request.Method.GET,
             "https://coopcycle.org/coopcycle.json",
             { processResponse(it) },
@@ -48,7 +49,7 @@ interface CooperativeSummaryDAO {
     }
 
     fun fetchCooperatives(): Set<Cooperative>? {
-        return when(result) {
+        return when (result) {
             is Error -> {
                 val error = (result as Error).error
                 Toast.makeText(activity, error.localizedMessage, Toast.LENGTH_LONG).show()
@@ -57,17 +58,18 @@ interface CooperativeSummaryDAO {
             }
             is Success -> {
                 val cooperatives = (result as Success).cooperatives
-                if(cooperatives.isEmpty())  {
+                if (cooperatives.isEmpty()) {
                     Log.w("FETCH.COOPERATIVES", "Successfully got zero cooperatives")
                     null
-                }
-                else {
+                } else {
                     Log.i("FETCH.COOPERATIVES", "Successfully got list of cooperatives")
                     Log.v("FETCH.COOPERATIVES", cooperatives.map { it.name }.toString())
                     cooperatives
                 }
             }
-            null -> { sendRequest() ; null }
+            null -> {
+                sendRequest(); null
+            }
         }
     }
 }
