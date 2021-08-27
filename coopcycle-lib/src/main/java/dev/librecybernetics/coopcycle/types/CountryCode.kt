@@ -1,12 +1,16 @@
 package dev.librecybernetics.coopcycle.types
 
+import dev.librecybernetics.coopcycle.util.KUppercaseSerializer
 import kotlinx.serialization.Serializable
 
 @JvmInline
 @Serializable
-value class CountryCode(val code: String) {
+value class CountryCode(
+    @Serializable(with = KUppercaseSerializer::class)
+    val code: String
+) {
     init {
         require(code.length == 2)
-        require(code.all { it.isLetter() })
+        require(code.all { it.isLetter() && it.isUpperCase() })
     }
 }
