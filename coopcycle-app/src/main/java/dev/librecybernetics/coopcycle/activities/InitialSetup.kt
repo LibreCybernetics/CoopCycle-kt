@@ -16,24 +16,18 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.android.volley.Request
 import com.android.volley.RequestQueue
-import com.android.volley.VolleyError
-import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import dev.librecybernetics.coopcycle.R
 import dev.librecybernetics.coopcycle.Util.location
+import dev.librecybernetics.coopcycle.dao.CooperativeSummaryDAO
 import dev.librecybernetics.coopcycle.schema.Cooperative
 import dev.librecybernetics.location.LocationActivityService
-import kotlinx.serialization.decodeFromString
-import kotlinx.serialization.json.Json
 import kotlin.math.max
 
-class InitialSetup : AppCompatActivity(), LocationActivityService {
+class InitialSetup : AppCompatActivity(), LocationActivityService, CooperativeSummaryDAO {
     companion object {
         private enum class Screen { Welcome, Selection }
-
-        private val jsonFormat = Json { isLenient = true; ignoreUnknownKeys = true }
 
         private data class CooperativeHolder(val view: View) : RecyclerView.ViewHolder(view) {
             init {
@@ -57,8 +51,7 @@ class InitialSetup : AppCompatActivity(), LocationActivityService {
                 currentCooperative = cooperative
                 cityNameView.text = cooperative.city.name
                 countryCodeView.text = cooperative.country.code
-                @SuppressLint("SetTextI18n")
-                cooperativeNameView.text = "Cooperative: ${cooperative.name.name}"
+                cooperativeNameView.text = cooperative.name.name
             }
         }
 
@@ -84,21 +77,13 @@ class InitialSetup : AppCompatActivity(), LocationActivityService {
         }
     }
 
-    private val cooperativesRequest: StringRequest =
-        StringRequest(
-            Request.Method.GET,
-            "https://coopcycle.org/coopcycle.json",
-            { processResponse(it) },
-            { processError(it) }
-        )
-
     // TODO: Move to Bundle to cache results
     private var cooperatives: Set<Cooperative> = setOf()
     private var currentScreen: Screen = Screen.Welcome
-    private var volleyRequestQueue: RequestQueue? = null
 
     override val activity: Activity = this
     override var locationManager: LocationManager? = null
+    override var requestQueue: RequestQueue? = null
 
     private fun changeScreen(toScreen: Screen) {
         when (toScreen) {
@@ -109,6 +94,8 @@ class InitialSetup : AppCompatActivity(), LocationActivityService {
             }
             Screen.Selection -> {
                 setContentView(R.layout.initial_setup_selection)
+                // Reload page with results; TODO: Investigate graceful recyclerview update
+                cooperatives = fetchCooperatives().orEmpty()
                 if (cooperatives.isNotEmpty()) {
                     val chooseCityRecyclerView: RecyclerView =
                         findViewById(R.id.choose_city_recycler_view)
@@ -134,36 +121,13 @@ class InitialSetup : AppCompatActivity(), LocationActivityService {
         currentScreen = toScreen
     }
 
-    private fun processError(error: VolleyError) {
-        Log.e("FETCH.COOPERATIVES", error.message.orEmpty())
-        Toast.makeText(this, error.localizedMessage, Toast.LENGTH_LONG).show()
-    }
-
-    private fun processResponse(response: String) {
-        cooperatives = jsonFormat
-            .decodeFromString<List<Cooperative>>(response)
-            .toSet()
-        // Reload page with results; TODO: Investigate graceful recyclerview update
-        if (currentScreen == Screen.Selection) changeScreen(Screen.Selection)
-        if (cooperatives.isEmpty()) {
-            Log.w("FETCH.COOPERATIVES", "Successfully got zero cooperatives")
-        } else {
-            Log.i("FETCH.COOPERATIVES", "Successfully got list of cooperatives")
-            Log.v(
-                "FETCH.COOPERATIVES",
-                cooperatives.map { it.name }.toString()
-            )
-        }
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         changeScreen(Screen.Welcome)
 
         locationManager = getSystemService(LocationManager::class.java)
-        volleyRequestQueue = Volley.newRequestQueue(this)
-        volleyRequestQueue?.add(cooperativesRequest)
-        volleyRequestQueue?.start()
+        requestQueue = Volley.newRequestQueue(this)
+        fetchCooperatives() // Prefetch before they are needed
     }
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
