@@ -1,0 +1,29 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  coopcycle-lib:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+      - uses: codecov/codecov-action@v2
+        with:
+          files: ./coopcycle-lib/build/reports/jacoco/test/jacocoTestReport.xml
+
+      - uses: actions/setup-java@v1
+        with:
+          java-version: 11
+      - uses: gradle/wrapper-validation-action@v1
+
+      - name: Run check
+        run: ./gradlew :coopcycle-lib:check
+
+      - name: Generate coverage report
+        run: ./gradlew :coopcycle-lib:jacocoTestReport
