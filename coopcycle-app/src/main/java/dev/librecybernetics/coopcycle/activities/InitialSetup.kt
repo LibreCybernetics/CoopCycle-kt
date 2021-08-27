@@ -1,6 +1,5 @@
 package dev.librecybernetics.coopcycle.activities
 
-import android.annotation.SuppressLint
 import android.app.Activity
 import android.location.Location
 import android.location.LocationManager
