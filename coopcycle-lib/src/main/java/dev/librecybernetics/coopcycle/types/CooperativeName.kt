@@ -8,5 +8,6 @@ import java.util.Comparator
 value class CooperativeName(val name: String) {
     init {
         require(name.isNotBlank())
+        require(name.trim() == name)
     }
 }
