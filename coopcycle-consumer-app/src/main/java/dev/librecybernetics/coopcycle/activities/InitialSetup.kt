@@ -18,9 +18,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.android.volley.RequestQueue
 import com.android.volley.toolbox.Volley
 import dev.librecybernetics.coopcycle.R
-import dev.librecybernetics.coopcycle.Util.location
 import dev.librecybernetics.coopcycle.dao.CooperativeSummaryDAO
 import dev.librecybernetics.coopcycle.schema.Cooperative
+import dev.librecybernetics.coopcycle.util.location
 import dev.librecybernetics.location.LocationActivityService
 import kotlin.math.max
 
@@ -81,8 +81,8 @@ class InitialSetup : AppCompatActivity(), LocationActivityService, CooperativeSu
     private var currentScreen: Screen = Screen.Welcome
 
     override val activity: Activity = this
-    override var locationManager: LocationManager? = null
-    override var requestQueue: RequestQueue? = null
+    override lateinit var locationManager: LocationManager
+    override lateinit var requestQueue: RequestQueue
 
     private fun changeScreen(toScreen: Screen) {
         when (toScreen) {

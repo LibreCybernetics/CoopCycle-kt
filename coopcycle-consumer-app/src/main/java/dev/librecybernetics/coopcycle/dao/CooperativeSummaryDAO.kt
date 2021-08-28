@@ -34,12 +34,12 @@ interface CooperativeSummaryDAO {
         }
     }
 
-    var requestQueue: RequestQueue?
+    val requestQueue: RequestQueue
     val activity: Activity
 
     private fun sendRequest() {
-        requestQueue?.add(cooperativeSummaryRequest)
-        requestQueue?.start()
+        requestQueue.add(cooperativeSummaryRequest)
+        requestQueue.start()
     }
 
     fun fetchCooperatives(): Set<Cooperative>? {

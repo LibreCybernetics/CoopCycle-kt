@@ -37,7 +37,7 @@ interface LocationActivityService {
     }
 
     val activity: Activity
-    var locationManager: LocationManager?
+    val locationManager: LocationManager
 
     private fun hasLocationPermission(accuracy: LocationAccuracy): Boolean =
         ActivityCompat.checkSelfPermission(
@@ -60,12 +60,12 @@ interface LocationActivityService {
     @SuppressLint("MissingPermission")
     private fun getBestLastKnownLocation(freshness: LocationFreshness): Location? {
         val currentTime = System.currentTimeMillis()
-        Log.d("LOCATION.ALL_PROVIDERS", locationManager?.allProviders.toString())
-        return locationManager?.allProviders.orEmpty()
+        Log.d("LOCATION.ALL_PROVIDERS", locationManager.allProviders.toString())
+        return locationManager.allProviders
             .mapNotNull {
                 if (hasLocationPermission(LocationAccuracy.Coarse))
                     try {
-                        locationManager?.getLastKnownLocation(it)
+                        locationManager.getLastKnownLocation(it)
                     } catch (e: SecurityException) {
                         return null
                     }
@@ -80,11 +80,11 @@ interface LocationActivityService {
     @SuppressLint("MissingPermission")
     private fun getCurrentLocation(accuracy: LocationAccuracy): Location? {
         val locationSet = HashSet<Location>()
-        locationManager?.allProviders.orEmpty().mapNotNull { provider ->
-            if (hasLocationPermission(accuracy) && locationManager != null)
+        locationManager.allProviders.mapNotNull { provider ->
+            if (hasLocationPermission(accuracy))
                 try {
                     LocationManagerCompat.getCurrentLocation(
-                        locationManager!!,
+                        locationManager,
                         provider,
                         null,
                         directExecutor,
