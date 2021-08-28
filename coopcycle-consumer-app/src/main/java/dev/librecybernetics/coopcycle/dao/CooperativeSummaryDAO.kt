@@ -5,27 +5,50 @@ import android.util.Log
 import com.android.volley.Request
 import com.android.volley.RequestQueue
 import com.android.volley.VolleyError
-import com.android.volley.toolbox.StringRequest
 import dev.librecybernetics.coopcycle.schema.Cooperative
 import dev.librecybernetics.coopcycle.util.UTF8StringRequest
 import kotlinx.coroutines.flow.*
 
 interface CooperativeSummaryDAO {
     companion object {
-        sealed interface Result
-        object Success : Result
-        data class Error(val error: VolleyError) : Result
+        private sealed interface State
+        private object Success : State
+        private object Updating : State
+        private data class Error(val error: VolleyError) : State
 
-        var result: Result? = null
+        private var state: MutableStateFlow<State?> = MutableStateFlow(null)
+        private val mCooperatives: MutableStateFlow<Set<Cooperative>> = MutableStateFlow(setOf())
     }
 
-    val cooperatives: MutableStateFlow<Set<Cooperative>>
     val requestQueue: RequestQueue
     val activity: Activity
 
-    fun requestCooperatives() {
+    val cooperatives: StateFlow<Set<Cooperative>>
+        get() {
+            pFetchCooperativesIfRequired()
+            return mCooperatives
+        }
+
+    private fun pFetchCooperativesIfRequired() {
+        state.update {
+            when (it) {
+                null -> {
+                    pFetchCooperatives()
+                    Updating
+                }
+                Updating -> Updating
+                is Error -> {
+                    pFetchCooperatives()
+                    Updating
+                }
+                Success -> Success
+            }
+        }
+    }
+
+    private fun pFetchCooperatives() {
         fun processError(error: VolleyError) {
-            result = Error(error)
+            state.value = Error(error)
             Log.e("FETCH.COOPERATIVES", error.message.orEmpty())
         }
 
@@ -37,18 +60,20 @@ interface CooperativeSummaryDAO {
                 Log.i("FETCH.COOPERATIVES", "Successfully got list of cooperatives")
                 Log.v("FETCH.COOPERATIVES", newData.map { it.name }.toString())
             }
-            cooperatives.update { current -> current + newData }
-            result = Success
+            mCooperatives.update { current -> current + newData }
+            state.value = Success
         }
 
-        val cooperativeSummaryRequest: StringRequest = UTF8StringRequest(
+        requestQueue.add(UTF8StringRequest(
             Request.Method.GET,
             "https://coopcycle.org/coopcycle.json",
             { processResponse(it) },
             { processError(it) }
-        )
-
-        requestQueue.add(cooperativeSummaryRequest)
+        ))
         requestQueue.start()
+    }
+
+    fun fetchCooperatives(forceUpdate: Boolean = false) {
+        if (forceUpdate) pFetchCooperatives() else pFetchCooperativesIfRequired()
     }
 }
