@@ -1,4 +1,4 @@
-package dev.librecybernetics.coopcycle.view
+package dev.librecybernetics.coopcycle.component
 
 import android.location.Location
 import android.util.Log

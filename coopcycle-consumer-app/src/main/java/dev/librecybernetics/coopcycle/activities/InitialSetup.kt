@@ -12,8 +12,8 @@ import androidx.compose.material.*
 import com.android.volley.RequestQueue
 import com.android.volley.toolbox.Volley
 import dev.librecybernetics.coopcycle.dao.CooperativeSummaryDAO
-import dev.librecybernetics.coopcycle.view.CooperativesList
-import dev.librecybernetics.coopcycle.view.WelcomeScreen
+import dev.librecybernetics.coopcycle.screen.CooperativeSelectionScreen
+import dev.librecybernetics.coopcycle.screen.WelcomeScreen
 import dev.librecybernetics.location.LocationActivityService
 import kotlinx.coroutines.flow.*
 
@@ -23,26 +23,36 @@ class InitialSetup : AppCompatActivity(), LocationActivityService, CooperativeSu
         private enum class Screen { Welcome, Selection }
     }
 
-    private var currentScreen: Screen = Screen.Welcome
+    private val currentScreen: MutableStateFlow<Screen> = MutableStateFlow(Screen.Welcome)
     private val coarseLocation: MutableStateFlow<Location?> = MutableStateFlow(null)
 
     override val activity: Activity = this
     override lateinit var locationManager: LocationManager
     override lateinit var requestQueue: RequestQueue
 
+    private fun updateLocation() {
+        coarseLocation.value = getLocation(
+            LocationActivityService.Companion.LocationFreshness.Any,
+            LocationActivityService.Companion.LocationAccuracy.Coarse
+        )
+        Log.d("SELECT.COOPERATIVES.LOCATION", coarseLocation.value.toString())
+    }
+
     private fun changeScreen(toScreen: Screen) {
-        when (toScreen) {
-            Screen.Welcome -> setContent { WelcomeScreen { changeScreen(Screen.Selection) } }
-            Screen.Selection -> {
-                setContent { CooperativesList(cooperatives, coarseLocation) }
-                coarseLocation.value = getLocation(
-                    LocationActivityService.Companion.LocationFreshness.Any,
-                    LocationActivityService.Companion.LocationAccuracy.Coarse
-                )
-                Log.d("SELECT.COOPERATIVES.LOCATION", coarseLocation.value.toString())
+        currentScreen.update {
+            when (toScreen) {
+                Screen.Welcome -> setContent {
+                    WelcomeScreen { changeScreen(Screen.Selection) }
+                }
+                Screen.Selection -> {
+                    setContent {
+                        CooperativeSelectionScreen(cooperatives, coarseLocation)
+                    }
+                    updateLocation()
+                }
             }
+            toScreen
         }
-        currentScreen = toScreen
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -55,7 +65,7 @@ class InitialSetup : AppCompatActivity(), LocationActivityService, CooperativeSu
     }
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
-        return when (keyCode to currentScreen) {
+        return when (keyCode to currentScreen.value) {
             KeyEvent.KEYCODE_BACK to Screen.Selection -> {
                 changeScreen(Screen.Welcome)
                 true // required for return

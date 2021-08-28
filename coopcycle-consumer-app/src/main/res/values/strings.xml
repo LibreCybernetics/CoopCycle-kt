@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">CoopCycle</string>
     <string name="welcome">Welcome</string>
-    <string name="welcome_copy">Thank you for downloading CoopCycle.\nTo start using the application connect to a server.</string>
-    <string name="choose_city_button">Choose a city</string>
+    <string name="welcome_copy">Thank you for downloading CoopCycle.\nTo start using the application select a city.</string>
+    <string name="select_city_prompt">Select a city</string>
     <string name="home_bg_description">Illustration of a plaza with a bike courier, two people shaking hands, and a person with a megaphone</string>
 </resources>

@@ -2,6 +2,6 @@
     <style name="Theme.CoopCycle" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="colorPrimary">@color/coopcycle_red</item>
         <item name="colorPrimaryDark">@color/coopcycle_red</item>
-        <item name="colorAccent">@color/teal_200</item>
+        <item name="colorAccent">@color/coopcycle_complimentary</item>
     </style>
 </resources>

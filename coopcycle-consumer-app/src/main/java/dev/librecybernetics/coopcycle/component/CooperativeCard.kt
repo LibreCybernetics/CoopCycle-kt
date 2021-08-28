@@ -1,4 +1,4 @@
-package dev.librecybernetics.coopcycle.view
+package dev.librecybernetics.coopcycle.component
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
