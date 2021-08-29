@@ -17,16 +17,16 @@ interface LocationActivityService {
         enum class LocationAccuracy { Fine, Coarse }
         enum class LocationFreshness { Current, Recent, Any }
 
-        private const val milisInAMinute = 60_000
+        private const val millisInAMinute = 60_000
         private val directExecutor = DirectExecutor()
 
         private fun isWithinRange(a: Long, b: Long, freshness: LocationFreshness): Boolean =
             (a - b).absoluteValue <
                     // In minutes
                     when (freshness) {
-                        LocationFreshness.Current -> 1 * milisInAMinute
-                        LocationFreshness.Recent -> 60 * milisInAMinute
-                        LocationFreshness.Any -> 24 * 60 * milisInAMinute
+                        LocationFreshness.Current -> 1 * millisInAMinute
+                        LocationFreshness.Recent -> 15 * millisInAMinute
+                        LocationFreshness.Any -> 1 * 60 * millisInAMinute
                     }
 
         private class DirectExecutor : Executor {
