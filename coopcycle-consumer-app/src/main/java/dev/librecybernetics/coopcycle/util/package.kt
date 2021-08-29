@@ -1,6 +1,10 @@
 package dev.librecybernetics.coopcycle.util
 
+import android.app.Activity
 import android.location.Location
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.preferencesDataStore
 import dev.librecybernetics.coopcycle.schema.Cooperative
 
 fun location(cooperative: Cooperative): Location {
@@ -9,3 +13,5 @@ fun location(cooperative: Cooperative): Location {
     l.longitude = cooperative.longitude.longitude.toDouble()
     return l
 }
+
+val Activity.preferencesDataStore: DataStore<Preferences> by preferencesDataStore("settings")
