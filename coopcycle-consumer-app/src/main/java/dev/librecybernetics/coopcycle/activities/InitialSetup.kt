@@ -1,5 +1,6 @@
 package dev.librecybernetics.coopcycle.activities
 
+import android.content.Intent
 import android.location.Location
 import android.location.LocationManager
 import android.os.Bundle
@@ -11,16 +12,19 @@ import androidx.compose.animation.*
 import androidx.compose.animation.core.*
 import androidx.compose.material.*
 import androidx.compose.runtime.*
+import androidx.datastore.preferences.core.edit
 import androidx.lifecycle.lifecycleScope
 import com.android.volley.RequestQueue
 import com.android.volley.toolbox.Volley
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
+import dev.librecybernetics.coopcycle.activities.LaunchActivity.Companion.configuredServerKey
 import dev.librecybernetics.coopcycle.dao.CooperativeSummaryDAO
 import dev.librecybernetics.coopcycle.schema.Cooperative
 import dev.librecybernetics.coopcycle.screen.CooperativeSelectionScreen
 import dev.librecybernetics.coopcycle.screen.WelcomeScreen
+import dev.librecybernetics.coopcycle.util.preferencesDataStore
 import dev.librecybernetics.location.LocationActivityService
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
@@ -36,6 +40,7 @@ class InitialSetup : AppCompatActivity(), LocationActivityService, CooperativeSu
         @Composable
         private fun InitialSetupNavigation(
             cooperatives: StateFlow<Set<Cooperative>>,
+            cooperativeOnClick: (Cooperative) -> Unit = {},
             extraFunction: () -> Unit = {}
         ) {
             val navController = rememberAnimatedNavController()
@@ -61,7 +66,8 @@ class InitialSetup : AppCompatActivity(), LocationActivityService, CooperativeSu
                     extraFunction()
                     CooperativeSelectionScreen(
                         cooperatives,
-                        coarseLocation
+                        coarseLocation,
+                        cooperativeOnClick
                     )
                 }
             }
@@ -82,11 +88,23 @@ class InitialSetup : AppCompatActivity(), LocationActivityService, CooperativeSu
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        
+
         setContent {
             InitialSetupNavigation(
                 cooperatives = cooperatives,
-                extraFunction = { updateLocation() }
+                extraFunction = { updateLocation() },
+                cooperativeOnClick =
+                { cooperative ->
+                    if (cooperative.coopcycle_url != null) {
+                        lifecycleScope.launch {
+                            preferencesDataStore.edit { preferences ->
+                                preferences[configuredServerKey] =
+                                    cooperative.coopcycle_url!!.address
+                            }
+                        }
+                        startActivity(Intent(activity, MainActivity::class.java))
+                    }
+                }
             )
         }
 
