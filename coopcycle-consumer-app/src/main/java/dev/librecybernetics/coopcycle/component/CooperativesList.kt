@@ -27,22 +27,30 @@ fun CooperativesList(
     LazyColumn(
         state = listState
     ) {
-        composableScope.launch {
-            // Jump to a close-by coop
-            val closestCoop: Cooperative? = observedCooperatives.sortedBy {
-                observedCoarseLocation?.distanceTo(location(it))
-            }.getOrNull(0)
-            Log.d("SELECT.COOPERATIVES.CLOSEST", closestCoop.toString())
-            if (closestCoop != null) {
-                val position = observedCooperatives
-                    .sortedBy { it.city.name }
-                    .indexOfFirst { it.city.name == closestCoop.city.name }
-                listState.animateScrollToItem(max(position - 3, 0))
+        // Determine if there is a close by coop)
+        val closestCoop: Cooperative? = observedCooperatives
+            .filter { observedCoarseLocation != null }
+            .sortedBy { observedCoarseLocation?.distanceTo(location(it)) }
+            .getOrNull(0)
+        Log.d("SELECT.COOPERATIVES.CLOSEST", closestCoop.toString())
+
+        // Position on the list; if non then -1
+        val closestCoopPosition = observedCooperatives
+            .sortedBy { it.city.name }
+            .indexOfFirst { it.city.name == closestCoop?.city?.name }
+
+        if (closestCoop != null) {
+            composableScope.launch {
+                listState.animateScrollToItem(max(closestCoopPosition - 3, 0))
             }
         }
 
-        items(observedCooperatives.sortedBy { it.city.name }) { cooperative: Cooperative ->
-            CooperativeCard(cooperative) { cooperativeOnClick(cooperative) }
+        itemsIndexed(observedCooperatives.sortedBy { it.city.name }) { i: Int, cooperative: Cooperative ->
+            CooperativeCard(
+                cooperative,
+                { cooperativeOnClick(cooperative) },
+                highlight = i == closestCoopPosition
+            )
         }
     }
 }

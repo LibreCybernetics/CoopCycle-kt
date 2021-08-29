@@ -79,10 +79,11 @@ class InitialSetup : AppCompatActivity(), LocationActivityService, CooperativeSu
     override lateinit var requestQueue: RequestQueue
 
     private fun updateLocation() {
-        coarseLocation.value = getLocation(
+        val loc = getLocation(
             LocationActivityService.Companion.LocationFreshness.Any,
             LocationActivityService.Companion.LocationAccuracy.Coarse
         )
+        coarseLocation.value = loc
         Log.d("InitialSetup.Location", coarseLocation.value.toString())
     }
 

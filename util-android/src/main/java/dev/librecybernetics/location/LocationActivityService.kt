@@ -9,8 +9,6 @@ import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.location.LocationManagerCompat
-import androidx.lifecycle.lifecycleScope
-import kotlinx.coroutines.*
 import kotlin.math.absoluteValue
 
 interface LocationActivityService {
@@ -67,6 +65,7 @@ interface LocationActivityService {
             }
             .map { Log.v("LOCATION.${it.provider}", it.toString()); it }
             .filter { isWithinRange(it.time, currentTime, freshness) }
+            .map { Log.v("LOCATION.${it.provider}.FRESH", it.toString()); it }
             .sortedBy { it.accuracy }
             .getOrNull(0)
     }
@@ -81,7 +80,7 @@ interface LocationActivityService {
                         locationManager,
                         provider,
                         null,
-                        { activity.lifecycleScope.launch(Dispatchers.Default) {} },
+                        { it.run() },
                         { location -> locationSet.add(location) }
                     )
                 } catch (e: SecurityException) {
