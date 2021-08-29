@@ -1,13 +1,16 @@
 package dev.librecybernetics.coopcycle.dao
 
-import android.app.Activity
 import android.util.Log
+import androidx.activity.ComponentActivity
+import androidx.lifecycle.lifecycleScope
 import com.android.volley.Request
 import com.android.volley.RequestQueue
 import com.android.volley.VolleyError
 import dev.librecybernetics.coopcycle.schema.Cooperative
-import dev.librecybernetics.coopcycle.util.UTF8StringRequest
+import dev.librecybernetics.util.UTF8StringRequest
+import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
+
 
 interface CooperativeSummaryDAO {
     companion object {
@@ -21,7 +24,7 @@ interface CooperativeSummaryDAO {
     }
 
     val requestQueue: RequestQueue
-    val activity: Activity
+    val activity: ComponentActivity
 
     val cooperatives: StateFlow<Set<Cooperative>>
         get() {
@@ -47,12 +50,12 @@ interface CooperativeSummaryDAO {
     }
 
     private fun pFetchCooperatives() {
-        fun processError(error: VolleyError) {
+        suspend fun processError(error: VolleyError) {
             state.value = Error(error)
             Log.e("FETCH.COOPERATIVES", error.message.orEmpty())
         }
 
-        fun processResponse(response: String) {
+        suspend fun processResponse(response: String) {
             val newData = Cooperative.setFromJSONString(response)
             if (newData.isEmpty()) {
                 Log.w("FETCH.COOPERATIVES", "Successfully got zero cooperatives")
@@ -67,8 +70,8 @@ interface CooperativeSummaryDAO {
         requestQueue.add(UTF8StringRequest(
             Request.Method.GET,
             "https://coopcycle.org/coopcycle.json",
-            { processResponse(it) },
-            { processError(it) }
+            { activity.lifecycleScope.launch(Dispatchers.Default) { processResponse(it) } },
+            { activity.lifecycleScope.launch(Dispatchers.Default) { processError(it) } }
         ))
         requestQueue.start()
     }

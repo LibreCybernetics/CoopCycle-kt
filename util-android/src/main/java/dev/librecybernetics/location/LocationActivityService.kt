@@ -2,14 +2,15 @@ package dev.librecybernetics.location
 
 import android.Manifest
 import android.annotation.SuppressLint
-import android.app.Activity
 import android.content.pm.PackageManager
 import android.location.Location
 import android.location.LocationManager
 import android.util.Log
+import androidx.activity.ComponentActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.location.LocationManagerCompat
-import java.util.concurrent.Executor
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.*
 import kotlin.math.absoluteValue
 
 interface LocationActivityService {
@@ -18,7 +19,6 @@ interface LocationActivityService {
         enum class LocationFreshness { Current, Recent, Any }
 
         private const val millisInAMinute = 60_000
-        private val directExecutor = DirectExecutor()
 
         private fun isWithinRange(a: Long, b: Long, freshness: LocationFreshness): Boolean =
             (a - b).absoluteValue <
@@ -28,15 +28,9 @@ interface LocationActivityService {
                         LocationFreshness.Recent -> 15 * millisInAMinute
                         LocationFreshness.Any -> 1 * 60 * millisInAMinute
                     }
-
-        private class DirectExecutor : Executor {
-            override fun execute(r: Runnable) {
-                r.run()
-            }
-        }
     }
 
-    val activity: Activity
+    val activity: ComponentActivity
     val locationManager: LocationManager
 
     private fun hasLocationPermission(accuracy: LocationAccuracy): Boolean =
@@ -87,7 +81,7 @@ interface LocationActivityService {
                         locationManager,
                         provider,
                         null,
-                        directExecutor,
+                        { activity.lifecycleScope.launch(Dispatchers.Default) {} },
                         { location -> locationSet.add(location) }
                     )
                 } catch (e: SecurityException) {

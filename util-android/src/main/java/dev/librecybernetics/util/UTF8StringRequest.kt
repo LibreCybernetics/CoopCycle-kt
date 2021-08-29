@@ -1,4 +1,4 @@
-package dev.librecybernetics.coopcycle.util
+package dev.librecybernetics.util
 
 import java.nio.charset.StandardCharsets
 

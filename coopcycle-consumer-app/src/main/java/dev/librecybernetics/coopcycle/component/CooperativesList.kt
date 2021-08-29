@@ -37,7 +37,7 @@ fun CooperativesList(
                 val position = observedCooperatives
                     .sortedBy { it.city.name }
                     .indexOfFirst { it.city.name == closestCoop.city.name }
-                listState.animateScrollToItem(max(position - 1, 0))
+                listState.animateScrollToItem(max(position - 3, 0))
             }
         }
 
