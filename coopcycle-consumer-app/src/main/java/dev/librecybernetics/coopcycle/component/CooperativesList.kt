@@ -15,7 +15,8 @@ import kotlin.math.max
 @ExperimentalMaterialApi
 fun CooperativesList(
     cooperatives: StateFlow<Set<Cooperative>>,
-    coarseLocation: StateFlow<Location?> = MutableStateFlow(null)
+    coarseLocation: StateFlow<Location?> = MutableStateFlow(null),
+    cooperativeOnClick: (Cooperative) -> Unit = { }
 ) {
     val listState = rememberLazyListState()
     val composableScope = rememberCoroutineScope()
@@ -41,7 +42,7 @@ fun CooperativesList(
         }
 
         items(observedCooperatives.sortedBy { it.city.name }) { cooperative: Cooperative ->
-            CooperativeCard(cooperative.city, cooperative.name, cooperative.country)
+            CooperativeCard(cooperative) { cooperativeOnClick(cooperative) }
         }
     }
 }
