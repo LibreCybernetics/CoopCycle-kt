@@ -16,8 +16,8 @@ android {
     compileSdk 31
 
     defaultConfig {
-        applicationId "dev.librecybernetics.coopcycle"
-        minSdk 23
+        applicationId "dev.librecybernetics.coopcycle_customer"
+        minSdk 21
         targetSdk 31
         versionCode 1
         versionName "1.0"

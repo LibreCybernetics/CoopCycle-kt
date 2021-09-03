@@ -10,6 +10,7 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.*
 import androidx.compose.material.icons.filled.*
 import androidx.compose.ui.graphics.*
+import androidx.core.app.ActivityCompat
 import dev.librecybernetics.coopcycle.R
 import dev.librecybernetics.location.LocationActivityService
 
@@ -25,7 +26,7 @@ class MainActivity : AppCompatActivity(), LocationActivityService {
             Scaffold(
                 topBar = {
                     TopAppBar(
-                        backgroundColor = Color(getColor(R.color.coopcycle_red))
+                        backgroundColor = Color(ActivityCompat.getColor(this, R.color.coopcycle_red))
                     ) {
                             Icon(Icons.Default.Menu, "Side Menu", tint = MaterialTheme.colors.surface)
                     }

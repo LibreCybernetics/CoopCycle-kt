@@ -12,6 +12,7 @@ import androidx.compose.animation.*
 import androidx.compose.animation.core.*
 import androidx.compose.material.*
 import androidx.compose.runtime.*
+import androidx.core.app.ActivityCompat
 import androidx.datastore.preferences.core.edit
 import androidx.lifecycle.lifecycleScope
 import com.android.volley.RequestQueue
@@ -44,9 +45,9 @@ class InitialSetup : AppCompatActivity(), LocationActivityService, CooperativeSu
             extraFunction: () -> Unit = {}
         ) {
             val navController = rememberAnimatedNavController()
-            AnimatedNavHost(navController, InitialSetup.Companion.Screen.Welcome.route) {
+            AnimatedNavHost(navController, Screen.Welcome.route) {
                 composable(
-                    InitialSetup.Companion.Screen.Welcome.route,
+                    Screen.Welcome.route,
                     enterTransition = { _, _ ->
                         slideIntoContainer(
                             AnimatedContentScope.SlideDirection.Down,
@@ -60,9 +61,9 @@ class InitialSetup : AppCompatActivity(), LocationActivityService, CooperativeSu
                         )
                     }
                 ) {
-                    WelcomeScreen { navController.navigate(InitialSetup.Companion.Screen.Selection.route) }
+                    WelcomeScreen { navController.navigate(Screen.Selection.route) }
                 }
-                composable(InitialSetup.Companion.Screen.Selection.route) {
+                composable(Screen.Selection.route) {
                     extraFunction()
                     CooperativeSelectionScreen(
                         cooperatives,
@@ -90,28 +91,27 @@ class InitialSetup : AppCompatActivity(), LocationActivityService, CooperativeSu
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        locationManager = ActivityCompat.getSystemService(this, LocationManager::class.java)!!
+        requestQueue = Volley.newRequestQueue(activity)
+
         setContent {
             InitialSetupNavigation(
                 cooperatives = cooperatives,
                 extraFunction = { updateLocation() },
                 cooperativeOnClick =
                 { cooperative ->
-                    if (cooperative.coopcycle_url != null) {
-                        lifecycleScope.launch {
-                            preferencesDataStore.edit { preferences ->
-                                preferences[configuredServerKey] =
-                                    cooperative.coopcycle_url!!.address
-                            }
+                    lifecycleScope.launch {
+                        preferencesDataStore.edit { preferences ->
+                            preferences[configuredServerKey] =
+                                cooperative.coopcycle_url.address
                         }
-                        startActivity(Intent(activity, MainActivity::class.java))
                     }
+                    startActivity(Intent(activity, MainActivity::class.java))
                 }
             )
         }
 
         lifecycleScope.launch {
-            locationManager = getSystemService(LocationManager::class.java)
-            requestQueue = Volley.newRequestQueue(activity)
             fetchCooperatives() // Prefetch before they are needed
         }
     }

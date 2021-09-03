@@ -9,9 +9,11 @@ import dev.librecybernetics.types.CountryCode
 import dev.librecybernetics.types.Latitude
 import dev.librecybernetics.types.Longitude
 import io.kotest.core.spec.style.ShouldSpec
+import io.kotest.matchers.collections.exist
 import io.kotest.matchers.collections.shouldContain
 import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.shouldBe
+import io.kotest.matchers.shouldNot
 import java.math.BigDecimal
 
 object CooperativeSpec : ShouldSpec({
@@ -26,33 +28,22 @@ object CooperativeSpec : ShouldSpec({
                 Latitude(BigDecimal("19.43268")),
                 Longitude(BigDecimal("-99.13421"))
             )
-            val coop2 = Cooperative(
-                CooperativeName("Orléans Cycloposteurs"),
-                CooperativeEMailAddress("lescycloposteurs@mailo.com"),
-                CityName("Orléans"),
-                CountryCode("FR"),
-                null,
-                Latitude(BigDecimal("47.9040718")),
-                Longitude(BigDecimal("1.8858347"))
-            )
             should("serializes example") {
                 val expected =
                     """[{"name":"Two Wheel Collective","mail":"twcbicimensajeria@gmail.com",""" +
                             """"city":"Ciudad de México","country":"MX","coopcycle_url":""" +
                             """"https://twc.coopcycle.org","latitude":"19.43268","longitude":""" +
-                            """"-99.13421"},{"name":"Orléans Cycloposteurs","mail":""" +
-                            """"lescycloposteurs@mailo.com","city":"Orléans","country":"FR",""" +
-                            """"latitude":"47.9040718","longitude":"1.8858347"}]"""
+                            """"-99.13421"}]"""
 
-                Cooperative.toJSONString(setOf(coop1, coop2)) shouldBe expected
+                Cooperative.toJSONString(setOf(coop1)) shouldBe expected
             }
             should("deserializes example") {
                 val example = javaClass.getResource("/fixtures/cooperatives.json").readText()
                 val parsed = Cooperative.setFromJSONString(example)
 
-                parsed shouldHaveSize 68
+                parsed shouldHaveSize 40
                 parsed shouldContain coop1
-                parsed shouldContain coop2
+                parsed shouldNot exist { it.name == CooperativeName("Orléans Cycloposteurs") }
             }
         }
     }
