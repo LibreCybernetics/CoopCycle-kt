@@ -1,0 +1,406 @@
+[
+  {
+    "id": 11,
+    "name": "Molino \"El Triunfo\"",
+    "description": "Venta de chiles, semillas, especias, condimentos y mas...",
+    "enabled": true,
+    "depositRefundEnabled": false,
+    "depositRefundOptin": true,
+    "address": {
+      "geo": {
+        "latitude": 19.4086204,
+        "longitude": -99.1228743
+      },
+      "streetAddress": "Av. Morelos 51, Jamaica, Ciudad de M\u00e9xico, CDMX, M\u00e9xico",
+      "telephone": "+525557409662",
+      "name": "Molino \"El Triunfo\""
+    },
+    "state": "normal",
+    "telephone": "+525557409662",
+    "activeMenuTaxon": "\/api\/restaurants\/menus\/23",
+    "closingRules": [],
+    "fulfillmentMethods": [
+      {
+        "type": "delivery",
+        "openingHours": [
+          "Mo-Fr 08:00-18:00"
+        ],
+        "enabled": true
+      },
+      {
+        "type": "collection",
+        "openingHours": [
+          "Mo-Fr 09:00-18:30"
+        ],
+        "enabled": true
+      }
+    ],
+    "openingHoursSpecification": [
+      {
+        "@type": "OpeningHoursSpecification",
+        "opens": "08:00",
+        "closes": "18:00",
+        "dayOfWeek": [
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday"
+        ]
+      }
+    ]
+  },
+  {
+    "id": 7,
+    "name": "Rainbow Bagels",
+    "description": "Los \u00fanicos bagels avalados por la Asociac\u00f3n Internacional de Unicornios (AIU)",
+    "enabled": true,
+    "depositRefundEnabled": false,
+    "depositRefundOptin": true,
+    "address": {
+      "geo": {
+        "latitude": 19.4253808,
+        "longitude": -99.1590965
+      },
+      "streetAddress": "Calle Marsella 56, Ju\u00e1rez, CDMX, M\u00e9xico",
+      "telephone": "+525540479339",
+      "name": "Rainbow Bagels"
+    },
+    "state": "normal",
+    "telephone": "+525540479339",
+    "activeMenuTaxon": "\/api\/restaurants\/menus\/17",
+    "closingRules": [
+      {
+        "id": 1,
+        "startDate": "2021-07-27T00:00:00-05:00",
+        "endDate": "2021-07-28T00:00:00-05:00"
+      }
+    ],
+    "fulfillmentMethods": [
+      {
+        "type": "delivery",
+        "openingHours": [
+          "Tu-Fr 09:00-20:00",
+          "Sa 10:00-16:00"
+        ],
+        "enabled": true
+      },
+      {
+        "type": "collection",
+        "openingHours": [
+          "Tu-Fr 08:30-20:00",
+          "Sa 09:00-15:30"
+        ],
+        "enabled": true
+      }
+    ],
+    "openingHoursSpecification": [
+      {
+        "@type": "OpeningHoursSpecification",
+        "opens": "09:00",
+        "closes": "20:00",
+        "dayOfWeek": [
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday"
+        ]
+      },
+      {
+        "@type": "OpeningHoursSpecification",
+        "opens": "10:00",
+        "closes": "16:00",
+        "dayOfWeek": [
+          "Saturday"
+        ]
+      }
+    ]
+  },
+  {
+    "id": 16,
+    "name": "Vendaval Cooperativa Panadera y Algo Mas",
+    "description": "Producimos pan artesanal de masa madre, no utilizamos conservadores pues queremos que nuestros productos nutran y no envenenen. Utilizamos ingredientes de calidad intentando que estos vengan de comercio justo directo de productores. Creemos que lo que producimos y c\u00f3mo lo producimos, importa de la misma manera que importa qu\u00e9 consumimos y c\u00f3mo lo hacemos. \r\nHacer pan es producir alimento, di\u00e1logo y cercan\u00eda con la gente. El pan es materia viva. Depende de los humores, aires, sensaciones, sabores y manos que alimentan la masa. Como nosotras, el pan es experiencia situada.",
+    "enabled": true,
+    "depositRefundEnabled": false,
+    "depositRefundOptin": true,
+    "address": {
+      "geo": {
+        "latitude": 19.4373957,
+        "longitude": -99.162632
+      },
+      "streetAddress": "Calle Guillermo Prieto 46, Cuauht\u00e9moc, Ciudad de M\u00e9xico, CDMX, M\u00e9xico",
+      "telephone": "+525554180054",
+      "name": "Vendaval Cooperativa Panadera y Algo Mas"
+    },
+    "state": "normal",
+    "telephone": "+525554180054",
+    "activeMenuTaxon": "\/api\/restaurants\/menus\/46",
+    "closingRules": [],
+    "fulfillmentMethods": [
+      {
+        "type": "collection",
+        "openingHours": [
+          "Mo-Fr 10:00-20:00",
+          "Sa 10:00-19:00"
+        ],
+        "enabled": true
+      },
+      {
+        "type": "delivery",
+        "openingHours": [
+          "Mo-Fr 10:00-20:00",
+          "Sa 10:00-19:00"
+        ],
+        "enabled": true
+      }
+    ],
+    "openingHoursSpecification": [
+      {
+        "@type": "OpeningHoursSpecification",
+        "opens": "10:00",
+        "closes": "20:00",
+        "dayOfWeek": [
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday"
+        ]
+      },
+      {
+        "@type": "OpeningHoursSpecification",
+        "opens": "10:00",
+        "closes": "19:00",
+        "dayOfWeek": [
+          "Saturday"
+        ]
+      }
+    ]
+  },
+  {
+    "id": 15,
+    "name": "NAHL Tortillerias",
+    "description": "Somos una Tortilleria con el objetivo de resaltar la importancia cultural, alimentaria y social que tiene nuestra deliciosa <<Tlaxcalli>> para la identidad de un@ mexican@ y buscando compartir esa relevancia con el mundo.",
+    "enabled": true,
+    "depositRefundEnabled": false,
+    "depositRefundOptin": true,
+    "address": {
+      "geo": {
+        "latitude": 19.4373957,
+        "longitude": -99.162632
+      },
+      "streetAddress": "C. Guillermo Prieto 46, Cuauht\u00e9moc, Ciudad de M\u00e9xico, CDMX, M\u00e9xico",
+      "telephone": "+525528567616",
+      "name": "NAHL Tortillerias"
+    },
+    "state": "normal",
+    "telephone": "+525528567616",
+    "activeMenuTaxon": "\/api\/restaurants\/menus\/37",
+    "closingRules": [],
+    "fulfillmentMethods": [
+      {
+        "type": "delivery",
+        "openingHours": [
+          "Mo-Fr 08:30-17:30",
+          "Sa 08:30-16:00"
+        ],
+        "enabled": true
+      },
+      {
+        "type": "collection",
+        "openingHours": [
+          "Mo-Fr 08:30-17:30",
+          "Sa 08:30-16:00"
+        ],
+        "enabled": true
+      }
+    ],
+    "openingHoursSpecification": [
+      {
+        "@type": "OpeningHoursSpecification",
+        "opens": "08:30",
+        "closes": "17:30",
+        "dayOfWeek": [
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday"
+        ]
+      },
+      {
+        "@type": "OpeningHoursSpecification",
+        "opens": "08:30",
+        "closes": "16:00",
+        "dayOfWeek": [
+          "Saturday"
+        ]
+      }
+    ]
+  },
+  {
+    "id": 6,
+    "name": "Ineer green",
+    "description": "El planeta necesita todo el bien que yo pueda hacer\r\nUn peque\u00f1o cambio en mis h\u00e1bitos tiene un gran impacto a largo plazo\r\nLa mejor manera de crear consciencia en los dem\u00e1s con el ejemplo.\r\n\r\nUn tubo de pasta dental tarda hasta 500 a\u00f1os en degradarse, un cepillo comercial entre 70-100 a\u00f1os.\r\nSi consideras la cantidad de productos de higiene personal que consumes al a\u00f1o, lo nocivos que son para el planeta y el volumen de personas que lo consumen, podr\u00e1s ver el problema que representan.\r\n\r\nNuestra marca de pasta dental tiene como prioridad ser un comercio consciente con el medio ambiente, los animales y la sociedad, por eso nuestro producto es natural, se vende a granel, tenemos din\u00e1micas para rellenar tus frascos, nuestros env\u00edos son con mensajer\u00eda en bicicleta y el embalaje es compostable!\r\n\r\nAdemas fomentamos el comercio local! Nosotros somos distribuidores en CDMX pero tambi\u00e9n puedes encontrar nuestros productos en Edo. de M\u00e9xico, Puebla, Culiac\u00e1n y Chihuahua! Esperamos pronto tener m\u00e1s puntos de venta en el resto de la Rep\u00fablica.",
+    "enabled": true,
+    "depositRefundEnabled": false,
+    "depositRefundOptin": true,
+    "address": {
+      "geo": {
+        "latitude": 19.3730267,
+        "longitude": -99.1402664
+      },
+      "streetAddress": "Orinoco 63, Zacahuitzco, Ciudad de M\u00e9xico, CDMX, M\u00e9xico",
+      "telephone": "+525628281609",
+      "name": "Ineer green"
+    },
+    "state": "normal",
+    "telephone": "+525628281609",
+    "activeMenuTaxon": "\/api\/restaurants\/menus\/44",
+    "closingRules": [],
+    "fulfillmentMethods": [
+      {
+        "type": "delivery",
+        "openingHours": [
+          "Mo-Sa 09:30-20:30"
+        ],
+        "enabled": true
+      },
+      {
+        "type": "collection",
+        "openingHours": [
+          "Mo-Sa 09:30-20:30"
+        ],
+        "enabled": true
+      }
+    ],
+    "openingHoursSpecification": [
+      {
+        "@type": "OpeningHoursSpecification",
+        "opens": "09:30",
+        "closes": "20:30",
+        "dayOfWeek": [
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday",
+          "Saturday"
+        ]
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "name": "Sprint Coffee Cycling and Workplace",
+    "description": "Espacio de trabajo y convivencia social con caf\u00e9 y bebidas calientes\/fr\u00edas, alimentos, desayunos y hasta cerveza. Pet friendly, Bike friendly, venta de accesorios y estacionamiento.",
+    "enabled": true,
+    "depositRefundEnabled": false,
+    "depositRefundOptin": true,
+    "address": {
+      "geo": {
+        "latitude": 19.3865575,
+        "longitude": -99.1627325
+      },
+      "streetAddress": "Avenida Eugenia 926-1, Colonia del Valle Centro, Ciudad de M\u00e9xico, CDMX, M\u00e9xico",
+      "telephone": "+525576924568",
+      "name": "Sprint Coffee Cycling and Workplace"
+    },
+    "state": "normal",
+    "telephone": "+525576924568",
+    "activeMenuTaxon": "\/api\/restaurants\/menus\/2",
+    "closingRules": [],
+    "fulfillmentMethods": [
+      {
+        "type": "delivery",
+        "openingHours": [
+          "Mo-Fr 07:30-19:00",
+          "Sa 08:30-14:00"
+        ],
+        "enabled": true
+      },
+      {
+        "type": "collection",
+        "openingHours": [
+          "Mo-Fr 07:30-19:00",
+          "Sa 08:30-14:00"
+        ],
+        "enabled": true
+      }
+    ],
+    "openingHoursSpecification": [
+      {
+        "@type": "OpeningHoursSpecification",
+        "opens": "07:30",
+        "closes": "19:00",
+        "dayOfWeek": [
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday"
+        ]
+      },
+      {
+        "@type": "OpeningHoursSpecification",
+        "opens": "08:30",
+        "closes": "14:00",
+        "dayOfWeek": [
+          "Saturday"
+        ]
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "name": "37 handworks",
+    "description": "From Ciudad de M\u00e9xico \ud83c\uddf2\ud83c\uddfd, I make bags and things \/ machinist, mechanic & welder amateur.",
+    "enabled": true,
+    "depositRefundEnabled": false,
+    "depositRefundOptin": true,
+    "address": {
+      "geo": {
+        "latitude": 19.4746304,
+        "longitude": -99.1524408
+      },
+      "streetAddress": "Calle 17, 02600 Ciudad de M\u00e9xico",
+      "telephone": "+525536688604",
+      "name": "37 handworks"
+    },
+    "state": "normal",
+    "telephone": "+525536688604",
+    "activeMenuTaxon": "\/api\/restaurants\/menus\/14",
+    "closingRules": [],
+    "fulfillmentMethods": [
+      {
+        "type": "delivery",
+        "openingHours": [
+          "Mo-Sa 07:00-19:00"
+        ],
+        "enabled": true
+      },
+      {
+        "type": "collection",
+        "openingHours": [
+          "Mo-Sa 07:00-19:00"
+        ],
+        "enabled": true
+      }
+    ],
+    "openingHoursSpecification": [
+      {
+        "@type": "OpeningHoursSpecification",
+        "opens": "07:00",
+        "closes": "19:00",
+        "dayOfWeek": [
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday",
+          "Saturday"
+        ]
+      }
+    ]
+  }
+]
