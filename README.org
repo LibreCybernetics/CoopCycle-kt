@@ -1,2 +1,7 @@
-WARNING: Currently has no license; will attempt to upstream to CoopCycle with a triple license. (Parity Public License, Prosperity Public License, Coopy License)
-WARNING: Cannot be distributed due to usage of trademarks without permission.
+*WARNING*: Currently has no license. Will attempt to upstream to CoopCycle with a triple license. (Parity Public License, Prosperity Public License, Coopy License)
+
+*WARNING*: Cannot be distributed due to usage of trademarks without permission.
+
+* Goals
+** Native, Performant, UX
+** Libre (Must be distributable via F-Droid) and without anti-features
