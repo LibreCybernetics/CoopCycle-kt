@@ -44,9 +44,9 @@ fun CooperativeCard(
 ) {
     val highlightScalar = remember { Animatable(0f) }
     if (highlight) LaunchedEffect(true) {
-        delay(400)
-        highlightScalar.animateTo(0.4f)
-        delay(200)
+        delay(600)
+        highlightScalar.animateTo(0.2f)
+    delay(600)
         highlightScalar.animateTo(0f)
     }
 

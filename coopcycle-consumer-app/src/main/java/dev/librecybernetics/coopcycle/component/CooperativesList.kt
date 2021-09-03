@@ -45,11 +45,12 @@ fun CooperativesList(
             }
         }
 
-        itemsIndexed(observedCooperatives.sortedBy { it.city.name }) { i: Int, cooperative: Cooperative ->
+        items(observedCooperatives.sortedBy { it.city.name }) { cooperative: Cooperative ->
+            val distance: Float? = observedCoarseLocation?.distanceTo(location(cooperative))
             CooperativeCard(
                 cooperative,
                 { cooperativeOnClick(cooperative) },
-                highlight = i == closestCoopPosition
+                highlight = if (distance !== null) distance <= 20_000f else false
             )
         }
     }
