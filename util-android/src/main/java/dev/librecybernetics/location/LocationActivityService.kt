@@ -54,26 +54,25 @@ interface LocationActivityService {
         val currentTime = System.currentTimeMillis()
         Log.d("LOCATION.ALL_PROVIDERS", locationManager.allProviders.toString())
         return locationManager.allProviders
+            .asSequence()
             .mapNotNull {
                 if (hasLocationPermission(LocationAccuracy.Coarse))
                     try {
                         locationManager.getLastKnownLocation(it)
                     } catch (e: SecurityException) {
-                        return null
+                        null
                     }
                 else null
             }
-            .map { Log.v("LOCATION.${it.provider}", it.toString()); it }
             .filter { isWithinRange(it.time, currentTime, freshness) }
-            .map { Log.v("LOCATION.${it.provider}.FRESH", it.toString()); it }
             .sortedBy { it.accuracy }
-            .getOrNull(0)
+            .firstOrNull()
     }
 
     @SuppressLint("MissingPermission")
     private fun getCurrentLocation(accuracy: LocationAccuracy): Location? {
         val locationSet = HashSet<Location>()
-        locationManager.allProviders.mapNotNull { provider ->
+        locationManager.allProviders.forEach { provider ->
             if (hasLocationPermission(accuracy))
                 try {
                     LocationManagerCompat.getCurrentLocation(
@@ -81,18 +80,21 @@ interface LocationActivityService {
                         provider,
                         null,
                         { it.run() },
-                        { location -> locationSet.add(location) }
+                        { location: Location? ->
+                            if (location != null) locationSet.add(location)
+                        }
                     )
                 } catch (e: SecurityException) {
-                    return null
                 }
-            else null
         }
 
         return locationSet.sortedBy { it.accuracy }.getOrNull(0)
     }
 
-    fun getLocation(freshness: LocationFreshness, accuracy: LocationAccuracy): Location? {
+    fun getLocation(
+        freshness: LocationFreshness,
+        accuracy: LocationAccuracy
+    ): Location? {
         requestLocationPermission(accuracy)
         return getBestLastKnownLocation(freshness) ?: getCurrentLocation(accuracy)
     }

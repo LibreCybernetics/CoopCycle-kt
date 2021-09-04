@@ -29,7 +29,7 @@ private data class LaxCooperative(
 
 private fun validate(cooperative: LaxCooperative): Cooperative? =
     try {
-        if (cooperative.mail !== null && cooperative.coopcycle_url !== null && cooperative.latitude !== null && cooperative.longitude !== null)
+        if (cooperative.mail != null && cooperative.coopcycle_url != null && cooperative.latitude != null && cooperative.longitude != null)
             Cooperative(
                 CooperativeName(cooperative.name),
                 CooperativeEMailAddress(cooperative.mail),

@@ -102,8 +102,7 @@ class InitialSetup : AppCompatActivity(), LocationActivityService, CooperativeSu
                 { cooperative ->
                     lifecycleScope.launch {
                         preferencesDataStore.edit { preferences ->
-                            preferences[configuredServerKey] =
-                                cooperative.coopcycle_url.address
+                            preferences[configuredServerKey] = cooperative.coopcycle_url.address
                         }
                     }
                     startActivity(Intent(activity, MainActivity::class.java))
@@ -111,8 +110,6 @@ class InitialSetup : AppCompatActivity(), LocationActivityService, CooperativeSu
             )
         }
 
-        lifecycleScope.launch {
-            fetchCooperatives() // Prefetch before they are needed
-        }
+        fetchCooperatives() // Prefetch before they are needed
     }
 }

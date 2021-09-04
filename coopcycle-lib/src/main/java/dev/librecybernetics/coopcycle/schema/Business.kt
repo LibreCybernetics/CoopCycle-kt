@@ -20,7 +20,7 @@ private data class LaxBusiness(
 
 private fun validate(business: LaxBusiness): Business? =
     try {
-        if (business.enabled !== null && business.address !== null)
+        if (business.enabled != null && business.address != null)
             Business(
                 BusinessId(business.id),
                 BusinessName(business.name),
