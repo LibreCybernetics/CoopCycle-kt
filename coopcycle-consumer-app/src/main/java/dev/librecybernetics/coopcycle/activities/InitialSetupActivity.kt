@@ -1,5 +1,6 @@
 package dev.librecybernetics.coopcycle.activities
 
+import android.Manifest
 import android.content.Intent
 import android.location.Location
 import android.location.LocationManager
@@ -70,5 +71,10 @@ class InitialSetupActivity : AppCompatActivity(), LocationActivityService, Coope
 		lifecycleScope.launch {
 			fetchCooperatives() // Prefetch before they are needed
 		}
+	}
+
+	override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+		if (requestCode == 0 && permissions.contains(Manifest.permission.ACCESS_COARSE_LOCATION)) updateLocation()
+		else super.onRequestPermissionsResult(requestCode, permissions, grantResults)
 	}
 }

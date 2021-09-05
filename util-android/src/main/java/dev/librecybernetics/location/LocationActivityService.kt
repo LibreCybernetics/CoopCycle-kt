@@ -1,7 +1,6 @@
 package dev.librecybernetics.location
 
 import android.Manifest
-import android.annotation.SuppressLint
 import android.content.pm.PackageManager
 import android.location.Location
 import android.location.LocationManager
@@ -49,12 +48,10 @@ interface LocationActivityService {
 			)
 	}
 
-	@SuppressLint("MissingPermission")
 	private fun getBestLastKnownLocation(freshness: LocationFreshness): Location? {
 		val currentTime = System.currentTimeMillis()
 		if (BuildConfig.DEBUG) Log.d("LOCATION.ALL_PROVIDERS", locationManager.allProviders.toString())
 		return locationManager.allProviders
-			.asSequence()
 			.mapNotNull {
 				if (hasLocationPermission(LocationAccuracy.Coarse))
 					try {
@@ -65,11 +62,9 @@ interface LocationActivityService {
 				else null
 			}
 			.filter { isWithinRange(it.time, currentTime, freshness) }
-			.sortedBy { it.accuracy }
-			.firstOrNull()
+			.minByOrNull { it.accuracy }
 	}
 
-	@SuppressLint("MissingPermission")
 	private fun getCurrentLocation(accuracy: LocationAccuracy): Location? {
 		val locationSet = HashSet<Location>()
 		locationManager.allProviders.forEach { provider ->
@@ -80,15 +75,13 @@ interface LocationActivityService {
 						provider,
 						null,
 						{ it.run() },
-						{ location: Location? ->
-							if (location != null) locationSet.add(location)
-						}
+						{ locationSet.add(it) }
 					)
 				} catch (e: SecurityException) {
 				}
 		}
 
-		return locationSet.sortedBy { it.accuracy }.getOrNull(0)
+		return locationSet.minByOrNull { it.accuracy }
 	}
 
 	fun getLocation(
