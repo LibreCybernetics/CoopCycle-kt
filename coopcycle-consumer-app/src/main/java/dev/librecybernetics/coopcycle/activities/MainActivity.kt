@@ -16,29 +16,31 @@ import dev.librecybernetics.location.LocationActivityService
 
 @ExperimentalMaterialApi
 class MainActivity : AppCompatActivity(), LocationActivityService {
-    override val activity: ComponentActivity = this
-    override lateinit var locationManager: LocationManager
+	override val activity: ComponentActivity = this
+	override lateinit var locationManager: LocationManager
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+	override fun onCreate(savedInstanceState: Bundle?) {
+		super.onCreate(savedInstanceState)
 
-        setContent {
-            Scaffold(
-                topBar = {
-                    TopAppBar(
-                        backgroundColor = Color(ActivityCompat.getColor(this, R.color.coopcycle_red))
-                    ) {
-                            Icon(Icons.Default.Menu, "Side Menu", tint = MaterialTheme.colors.surface)
-                    }
-                },
-                drawerContent = {
-                    Column {
-                        Text("Drawer")
-                    }
-                }
-            ) {
-                Text("MainActivity")
-            }
-        }
-    }
+		setContent {
+			Scaffold(
+				topBar = {
+					TopAppBar(
+						backgroundColor = Color(
+							ActivityCompat.getColor(this, R.color.coopcycle_red)
+						)
+					) {
+						Icon(Icons.Default.Menu, "Side Menu", tint = MaterialTheme.colors.surface)
+					}
+				},
+				drawerContent = {
+					Column {
+						Text("Drawer")
+					}
+				}
+			) {
+				Text("MainActivity")
+			}
+		}
+	}
 }

@@ -10,9 +10,9 @@ import kotlinx.coroutines.flow.*
 @Composable
 @ExperimentalMaterialApi
 fun CooperativeSelectionScreen(
-    cooperatives: StateFlow<Set<Cooperative>>,
-    coarseLocation: StateFlow<Location?> = MutableStateFlow(null),
-    cooperativeOnClick: (Cooperative) -> Unit = { }
+	cooperatives: StateFlow<Set<Cooperative>>,
+	coarseLocation: StateFlow<Location?> = MutableStateFlow(null),
+	cooperativeOnClick: (Cooperative) -> Unit = { }
 ) {
-    CooperativesList(cooperatives, coarseLocation, cooperativeOnClick)
+	CooperativesList(cooperatives, coarseLocation, cooperativeOnClick)
 }

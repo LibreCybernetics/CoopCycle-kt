@@ -6,8 +6,8 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class Address(
-    val name: String,
-    val streetAddress: String,
-    val telephone: Telephone,
-    val geo: Geolocation,
+	val name: String,
+	val streetAddress: String,
+	val telephone: Telephone,
+	val geo: Geolocation,
 )

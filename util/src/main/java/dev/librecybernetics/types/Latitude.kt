@@ -7,10 +7,11 @@ import java.math.BigDecimal
 @JvmInline
 @Serializable
 value class Latitude(
-    @Serializable(with = KBigDecimalStringSerializer::class) val latitude: BigDecimal
+	@Serializable(with = KBigDecimalStringSerializer::class)
+	val latitude: BigDecimal
 ) {
-    init {
-        require(latitude >= BigDecimal(-90))
-        require(latitude <= BigDecimal(90))
-    }
+	init {
+		require(latitude >= BigDecimal(-90))
+		require(latitude <= BigDecimal(90))
+	}
 }

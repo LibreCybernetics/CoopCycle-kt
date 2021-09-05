@@ -14,30 +14,30 @@ import kotlinx.coroutines.flow.*
 @ExperimentalMaterialApi
 @ExperimentalAnimationApi
 class LaunchActivity : ComponentActivity() {
-    companion object {
-        val configuredServerKey = stringPreferencesKey("configured_server")
-    }
+	companion object {
+		val configuredServerKey = stringPreferencesKey("configured_server")
+	}
 
-    private val context = this
+	private val context = this
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+	override fun onCreate(savedInstanceState: Bundle?) {
+		super.onCreate(savedInstanceState)
 
-        lifecycleScope.launch {
-            val configuredServer = preferencesDataStore.data.map {
-                try {
-                    it[configuredServerKey]
-                } catch (_: Throwable) {
-                    null
-                }
-            }.firstOrNull()
+		lifecycleScope.launch {
+			val configuredServer = preferencesDataStore.data.map {
+				try {
+					it[configuredServerKey]
+				} catch (_: Throwable) {
+					null
+				}
+			}.firstOrNull()
 
-            when (configuredServer) {
-                null ->
-                    startActivity(Intent(context, InitialSetup::class.java))
-                configuredServer ->
-                    startActivity(Intent(context, MainActivity::class.java))
-            }
-        }
-    }
+			when (configuredServer) {
+				null ->
+					startActivity(Intent(context, InitialSetupActivity::class.java))
+				configuredServer ->
+					startActivity(Intent(context, MainActivity::class.java))
+			}
+		}
+	}
 }

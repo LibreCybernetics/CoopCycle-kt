@@ -22,7 +22,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.InitialSetup"
+            android:name=".activities.InitialSetupActivity"
             android:exported="true">
         </activity>
         <activity
