@@ -16,7 +16,7 @@ interface CooperativeSummaryDAO {
 		private object Updating : State
 		private data class Error(val error: VolleyError) : State
 
-		private var state: MutableStateFlow<State?> = MutableStateFlow(null)
+		private val state: MutableStateFlow<State?> = MutableStateFlow(null)
 		private val mCooperatives: MutableStateFlow<Set<Cooperative>> = MutableStateFlow(setOf())
 	}
 

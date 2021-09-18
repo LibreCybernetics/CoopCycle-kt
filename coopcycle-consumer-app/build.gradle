@@ -4,7 +4,7 @@ plugins {
 }
 
 ext.versions = [
-        'compose': "1.1.0-alpha03"
+        'compose': '1.1.0-alpha04'
 ]
 
 android {
@@ -63,9 +63,9 @@ dependencies {
     implementation 'androidx.datastore:datastore:1.0.0'
     implementation 'androidx.datastore:datastore-preferences:1.0.0'
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.3.1'
-    implementation 'androidx.navigation:navigation-compose:2.4.0-alpha08'
+    implementation 'androidx.navigation:navigation-compose:2.4.0-alpha09'
     implementation 'com.android.volley:volley:1.2.1'
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.1'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2'
     // Third Party
-    implementation 'com.google.accompanist:accompanist-navigation-animation:0.17.0'
+    implementation 'com.google.accompanist:accompanist-navigation-animation:0.18.0'
 }

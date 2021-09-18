@@ -12,12 +12,18 @@ import androidx.compose.material.icons.filled.*
 import androidx.compose.ui.graphics.*
 import androidx.core.app.ActivityCompat
 import dev.librecybernetics.coopcycle.R
+import dev.librecybernetics.coopcycle.schema.Business
+import dev.librecybernetics.coopcycle.screen.MainScreen
 import dev.librecybernetics.location.LocationActivityService
+import kotlinx.coroutines.flow.*
 
 @ExperimentalMaterialApi
 class MainActivity : AppCompatActivity(), LocationActivityService {
 	override val activity: ComponentActivity = this
 	override lateinit var locationManager: LocationManager
+
+	val popularBusinesses: MutableStateFlow<Set<Business>> = MutableStateFlow(setOf())
+	val closebyBusinesses: MutableStateFlow<Set<Business>> = MutableStateFlow(setOf())
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
@@ -39,7 +45,7 @@ class MainActivity : AppCompatActivity(), LocationActivityService {
 					}
 				}
 			) {
-				Text("MainActivity")
+				MainScreen(popularBusinesses = popularBusinesses, closebyBusinesses = closebyBusinesses)
 			}
 		}
 	}

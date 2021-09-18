@@ -4,7 +4,7 @@ plugins {
 }
 
 ext.versions = [
-        'compose': "1.1.0-alpha03"
+        'compose': '1.1.0-alpha04'
 ]
 
 android {
@@ -54,5 +54,5 @@ dependencies {
     implementation 'androidx.core:core-ktx:1.6.0'
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.3.1'
     implementation 'com.android.volley:volley:1.2.1'
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.1'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2'
 }
