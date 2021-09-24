@@ -12,6 +12,8 @@
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/coopcycle-consumer-app" />
             <option value="$PROJECT_DIR$/coopcycle-lib" />
+            <option value="$PROJECT_DIR$/personal-flow-desktop" />
+            <option value="$PROJECT_DIR$/personal-flow-lib" />
             <option value="$PROJECT_DIR$/util" />
             <option value="$PROJECT_DIR$/util-android" />
           </set>

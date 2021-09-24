@@ -15,6 +15,10 @@ android {
 
     kotlinOptions {
         jvmTarget = '11'
+
+        freeCompilerArgs += [
+                "-P", "plugin:androidx.compose.compiler.plugins.kotlin:suppressKotlinVersionCompatibilityCheck=true"
+        ]
     }
 
     compileSdk 31

@@ -5,8 +5,10 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
-rootProject.name = "CoopCycle"
+rootProject.name = 'CoopCycle'
 include ':coopcycle-consumer-app'
 include ':coopcycle-lib'
 include ':util-android'
 include ':util'
+include ':personal-flow-lib'
+include ':personal-flow-desktop'
