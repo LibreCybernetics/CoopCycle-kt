@@ -9,7 +9,7 @@ import dev.librecybernetics.util.UTF8StringRequest
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
 
-interface CooperativeSummaryDAO {
+interface ResumoKooperativoDAO {
 	companion object {
 		private sealed interface State
 		private object Success : State
@@ -20,10 +20,10 @@ interface CooperativeSummaryDAO {
 		private val mCooperatives: MutableStateFlow<Set<Cooperative>> = MutableStateFlow(setOf())
 	}
 
-	val requestQueue: RequestQueue
-	val activity: ComponentActivity
+	val petoVeco: RequestQueue
+	val aktiveco: ComponentActivity
 
-	val cooperatives: StateFlow<Set<Cooperative>>
+	val kooperativoj: StateFlow<Set<Cooperative>>
 		get() {
 			pFetchCooperativesIfRequired()
 			return mCooperatives
@@ -64,16 +64,16 @@ interface CooperativeSummaryDAO {
 			state.value = Success
 		}
 
-		requestQueue.add(UTF8StringRequest(
+		petoVeco.add(UTF8StringRequest(
 			Request.Method.GET,
 			"https://coopcycle.org/coopcycle.json",
-			{ activity.lifecycleScope.launch { processResponse(it) } },
-			{ activity.lifecycleScope.launch { processError(it) } }
+			{ aktiveco.lifecycleScope.launch { processResponse(it) } },
+			{ aktiveco.lifecycleScope.launch { processError(it) } }
 		))
-		requestQueue.start()
+		petoVeco.start()
 	}
 
-	fun fetchCooperatives(forceUpdate: Boolean = false) {
+	fun alportuKooperativo(forceUpdate: Boolean = false) {
 		if (forceUpdate) pFetchCooperatives() else pFetchCooperativesIfRequired()
 	}
 }

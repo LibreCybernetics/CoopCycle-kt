@@ -21,11 +21,11 @@ object InitialSetupNavigation {
 @ExperimentalMaterialApi
 @ExperimentalAnimationApi
 @Composable
-fun InitialSetupNavigation(
-	cooperatives: StateFlow<Set<Cooperative>>,
-	location: StateFlow<Location?>,
-	cooperativeOnClick: (Cooperative) -> Unit = {},
-	extraFunction: () -> Unit = {}
+fun KomencaAgordiNavigado(
+	kooperativoj: StateFlow<Set<Cooperative>>,
+	loko: StateFlow<Location?>,
+	aklakanteKooperativon: (Cooperative) -> Unit = {},
+	aldonaAgo: () -> Unit = {}
 ) {
 	val navController = rememberAnimatedNavController()
 	AnimatedNavHost(navController, InitialSetupNavigation.Screen.Welcome.route) {
@@ -45,8 +45,8 @@ fun InitialSetupNavigation(
 			}
 		) { WelcomeScreen { navController.navigate(InitialSetupNavigation.Screen.Selection.route) } }
 		composable(InitialSetupNavigation.Screen.Selection.route) {
-			extraFunction()
-			CooperativeSelectionScreen(cooperatives, location, cooperativeOnClick)
+			aldonaAgo()
+			CooperativeSelectionScreen(kooperativoj, loko, aklakanteKooperativon)
 		}
 	}
 }

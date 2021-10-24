@@ -14,4 +14,4 @@ fun location(cooperative: Cooperative): Location {
 	return l
 }
 
-val Activity.preferencesDataStore: DataStore<Preferences> by preferencesDataStore("settings")
+val Activity.preferojDatumbutiko: DataStore<Preferences> by preferencesDataStore("settings")

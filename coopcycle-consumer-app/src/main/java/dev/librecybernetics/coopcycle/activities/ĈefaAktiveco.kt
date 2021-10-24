@@ -14,13 +14,13 @@ import androidx.core.app.ActivityCompat
 import dev.librecybernetics.coopcycle.R
 import dev.librecybernetics.coopcycle.schema.Business
 import dev.librecybernetics.coopcycle.screen.MainScreen
-import dev.librecybernetics.location.LocationActivityService
+import dev.librecybernetics.location.LokaServo
 import kotlinx.coroutines.flow.*
 
 @ExperimentalMaterialApi
-class MainActivity : AppCompatActivity(), LocationActivityService {
-	override val activity: ComponentActivity = this
-	override lateinit var locationManager: LocationManager
+class ĈefaAktiveco : AppCompatActivity(), LokaServo {
+	override val aktiveco: ComponentActivity = this
+	override lateinit var lokmanaĝero: LocationManager
 
 	val popularBusinesses: MutableStateFlow<Set<Business>> = MutableStateFlow(setOf())
 	val closebyBusinesses: MutableStateFlow<Set<Business>> = MutableStateFlow(setOf())

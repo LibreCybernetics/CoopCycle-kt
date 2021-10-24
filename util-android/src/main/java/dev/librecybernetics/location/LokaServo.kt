@@ -10,31 +10,31 @@ import androidx.core.app.ActivityCompat
 import androidx.core.location.LocationManagerCompat
 import kotlin.math.absoluteValue
 
-interface LocationActivityService {
+interface LokaServo {
 	companion object {
-		enum class LocationAccuracy { Fine, Coarse }
-		enum class LocationFreshness { Current, Recent, Any }
+		enum class LocationAccuracy { Fine, Kruda }
+		enum class LokoFreŝeco { Current, Recent, Iu }
 
 		private const val millisInAMinute = 60_000
 
-		internal fun isWithinRange(a: Long, b: Long, freshness: LocationFreshness): Boolean =
+		internal fun isWithinRange(a: Long, b: Long, freshness: LokoFreŝeco): Boolean =
 			(a - b).absoluteValue <
 							// In minutes
 							when (freshness) {
-								LocationFreshness.Current -> 1 * millisInAMinute
-								LocationFreshness.Recent -> 15 * millisInAMinute
-								LocationFreshness.Any -> 1 * 60 * millisInAMinute
+								LokoFreŝeco.Current -> 1 * millisInAMinute
+								LokoFreŝeco.Recent -> 15 * millisInAMinute
+								LokoFreŝeco.Iu -> 1 * 60 * millisInAMinute
 							}
 	}
 
-	val activity: ComponentActivity
-	val locationManager: LocationManager
+	val aktiveco: ComponentActivity
+	val lokmanaĝero: LocationManager
 
 	private fun hasLocationPermission(accuracy: LocationAccuracy): Boolean =
 		ActivityCompat.checkSelfPermission(
-			activity,
+			aktiveco,
 			when (accuracy) {
-				LocationAccuracy.Coarse -> Manifest.permission.ACCESS_COARSE_LOCATION
+				LocationAccuracy.Kruda -> Manifest.permission.ACCESS_COARSE_LOCATION
 				LocationAccuracy.Fine -> Manifest.permission.ACCESS_FINE_LOCATION
 			}
 		) == PackageManager.PERMISSION_GRANTED
@@ -42,20 +42,20 @@ interface LocationActivityService {
 	private fun requestLocationPermission(accuracy: LocationAccuracy) {
 		if (!hasLocationPermission(accuracy))
 			ActivityCompat.requestPermissions(
-				activity,
+				aktiveco,
 				arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION),
 				0
 			)
 	}
 
-	private fun getBestLastKnownLocation(freshness: LocationFreshness): Location? {
+	private fun getBestLastKnownLocation(freshness: LokoFreŝeco): Location? {
 		val currentTime = System.currentTimeMillis()
-		if (BuildConfig.DEBUG) Log.d("LOCATION.ALL_PROVIDERS", locationManager.allProviders.toString())
-		return locationManager.allProviders
+		if (BuildConfig.DEBUG) Log.d("LOCATION.ALL_PROVIDERS", lokmanaĝero.allProviders.toString())
+		return lokmanaĝero.allProviders
 			.mapNotNull {
-				if (hasLocationPermission(LocationAccuracy.Coarse))
+				if (hasLocationPermission(LocationAccuracy.Kruda))
 					try {
-						locationManager.getLastKnownLocation(it)
+						lokmanaĝero.getLastKnownLocation(it)
 					} catch (e: SecurityException) {
 						null
 					}
@@ -67,11 +67,11 @@ interface LocationActivityService {
 
 	private fun getCurrentLocation(accuracy: LocationAccuracy): Location? {
 		val locationSet = HashSet<Location>()
-		locationManager.allProviders.forEach { provider ->
+		lokmanaĝero.allProviders.forEach { provider ->
 			if (hasLocationPermission(accuracy))
 				try {
 					LocationManagerCompat.getCurrentLocation(
-						locationManager,
+						lokmanaĝero,
 						provider,
 						null,
 						{ it.run() },
@@ -84,8 +84,8 @@ interface LocationActivityService {
 		return locationSet.minByOrNull { it.accuracy }
 	}
 
-	fun getLocation(
-		freshness: LocationFreshness,
+	fun akiriLokon(
+		freshness: LokoFreŝeco,
 		accuracy: LocationAccuracy
 	): Location? {
 		requestLocationPermission(accuracy)

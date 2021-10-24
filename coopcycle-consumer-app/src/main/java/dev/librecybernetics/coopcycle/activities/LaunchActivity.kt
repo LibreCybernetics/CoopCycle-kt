@@ -7,7 +7,7 @@ import androidx.compose.animation.*
 import androidx.compose.material.*
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.lifecycle.lifecycleScope
-import dev.librecybernetics.coopcycle.util.preferencesDataStore
+import dev.librecybernetics.coopcycle.util.preferojDatumbutiko
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
 
@@ -15,7 +15,7 @@ import kotlinx.coroutines.flow.*
 @ExperimentalAnimationApi
 class LaunchActivity : ComponentActivity() {
 	companion object {
-		val configuredServerKey = stringPreferencesKey("configured_server")
+		val agorditaServiloKlavo = stringPreferencesKey("configured_server")
 	}
 
 	private val context = this
@@ -24,9 +24,9 @@ class LaunchActivity : ComponentActivity() {
 		super.onCreate(savedInstanceState)
 
 		lifecycleScope.launch {
-			val configuredServer = preferencesDataStore.data.map {
+			val configuredServer = preferojDatumbutiko.data.map {
 				try {
-					it[configuredServerKey]
+					it[agorditaServiloKlavo]
 				} catch (_: Throwable) {
 					null
 				}
@@ -34,9 +34,9 @@ class LaunchActivity : ComponentActivity() {
 
 			when (configuredServer) {
 				null ->
-					startActivity(Intent(context, InitialSetupActivity::class.java))
+					startActivity(Intent(context, KomencaAgordiAktiveco::class.java))
 				configuredServer ->
-					startActivity(Intent(context, MainActivity::class.java))
+					startActivity(Intent(context, ĈefaAktiveco::class.java))
 			}
 		}
 	}

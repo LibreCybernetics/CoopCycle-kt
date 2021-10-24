@@ -22,11 +22,11 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.InitialSetupActivity"
+            android:name=".activities.KomencaAgordiAktiveco"
             android:exported="true">
         </activity>
         <activity
-            android:name=".activities.MainActivity"
+            android:name=".activities.ĈefaAktiveco"
             android:exported="true">
         </activity>
     </application>
