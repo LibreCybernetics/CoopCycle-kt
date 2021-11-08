@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="CompilerConfiguration">
-    <bytecodeTargetLevel target="1.7" />
+    <bytecodeTargetLevel target="1.7">
+      <module name="CoopCycle.coopcycle-consumer-app" target="11" />
+      <module name="CoopCycle.coopcycle-lib" target="11" />
+      <module name="CoopCycle.personal-flow-desktop" target="11" />
+      <module name="CoopCycle.util" target="11" />
+      <module name="CoopCycle.util-android" target="11" />
+    </bytecodeTargetLevel>
   </component>
 </project>
