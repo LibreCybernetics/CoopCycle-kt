@@ -7,6 +7,11 @@
       <module name="CoopCycle.personal-flow-desktop" target="11" />
       <module name="CoopCycle.util" target="11" />
       <module name="CoopCycle.util-android" target="11" />
+      <module name="LibreCybernetics.coopcycle-consumer-app" target="11" />
+      <module name="LibreCybernetics.coopcycle-lib" target="11" />
+      <module name="LibreCybernetics.personal-flow-desktop" target="11" />
+      <module name="LibreCybernetics.util" target="11" />
+      <module name="LibreCybernetics.util-android" target="11" />
     </bytecodeTargetLevel>
   </component>
 </project>

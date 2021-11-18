@@ -1,13 +1,17 @@
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+
     repositories {
         google()
         mavenCentral()
     }
 }
-rootProject.name = 'CoopCycle'
+
+rootProject.name = 'LibreCybernetics'
+
 include ':coopcycle-consumer-app'
 include ':coopcycle-lib'
+include ':mak-bib'
 include ':util-android'
 include ':util'
 include ':personal-flow-lib'
